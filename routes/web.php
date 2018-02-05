@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('pages.main_menu');
 });
 
+Route::get('/issues', "Main\MenuController@showIssues")->name("user.main_issue");
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

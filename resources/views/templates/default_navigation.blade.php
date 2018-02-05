@@ -58,7 +58,7 @@
             <li class="header">MAIN NAVIGATION</li>
                 <li class="treeview active">
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i>Menu List Issue</a></li>
+                        <li><a href="{{ route("user.main_issue") }}"><i class="fa fa-circle-o"></i>Issue</a></li>
                     </ul>
                     <ul class="treeview-menu">
                         <li><a href="#"><i class="fa fa-circle-o"></i>Menu 2</a></li>
