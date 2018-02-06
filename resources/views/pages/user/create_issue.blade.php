@@ -29,62 +29,36 @@
                 <div class="box box-primary">
                     <!-- form start -->
                     <form role="form">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Create New Issue</h3>
-                            </div>
-                            <!-- /.box-header -->
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <label for="subject">Subject</label>
-                                    <input class="form-control" id="subject" placeholder="Subject">
-                                </div>
-                                <div class="form-group">
-                                    <label for="cmb-form">Form</label>
-                                    <select class="form-control cmb-form"  id="cmb-form"></select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="keterangan">Keterangan</label>
-                                    <textarea class="form-control" rows="8" placeholder="Isi Keterangan"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <div class="btn btn-default btn-file">
-                                        <i class="fa fa-paperclip"></i> Attachment
-                                        <input name="attachment" type="file">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer">
-                                <div class="pull-right">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                                </div>
-                            </div>
-                            <!-- /.box-footer -->
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Create New Issue</h3>
                         </div>
-
-
-
-
-                        {{--<div class="box-body">--}}
-                            {{--<div class="form-group">--}}
-                                {{--<label for="subject">Subject</label>--}}
-                                {{--<input class="form-control" id="subject" placeholder="Enter subject">--}}
-                            {{--</div>--}}
-                            {{--<div class="form-group">--}}
-                                {{--<label for="cmb-form">Form</label>--}}
-                                {{--<select name="kelurahan_1" class="form-control cmb-form"  id="cmb-form"></select>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="form-group">--}}
-                                {{--<label for="attachment">Lampiran</label>--}}
-                                {{--<input id="attachment" type="file">--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- /.box-body -->--}}
-
-                        {{--<div class="box-footer">--}}
-                            {{--<button type="submit" class="btn btn-primary">Submit</button>--}}
-                        {{--</div>--}}
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input class="form-control" id="subject" placeholder="Subject">
+                            </div>
+                            <div class="form-group">
+                                <label for="cmb-form">Form</label>
+                                <select class="form-control cmb-form"  id="cmb-form"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="keterangan">Keterangan</label>
+                                <textarea class="form-control" rows="8" placeholder="Isi Keterangan"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="btn btn-default btn-file">
+                                    <i class="fa fa-paperclip"></i> Attachment
+                                    <input name="attachment" type="file">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <div class="pull-right">
+                                <a href="{{ route("user.main_issue") }}" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <!-- /.box -->
