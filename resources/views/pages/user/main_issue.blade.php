@@ -19,7 +19,7 @@
     <section class="content">
         <div class="row">
             <div class="col-md-3">
-                <a href="#" class="btn btn-primary btn-block margin-bottom">Create New Issue</a>
+                <a href="{{ route('user.create_issue') }}" class="btn btn-primary btn-block margin-bottom">Create New Issue</a>
 
                 <div class="box box-solid">
                     <div class="box-header with-border">
@@ -90,41 +90,36 @@
                         <div class="table-responsive mailbox-messages">
                             <table class="table table-hover table-striped">
                                 <tbody>
+                                @for($i=0;$i<5;$i++)
                                     <tr>
 
-                                        <td><span class="label label-danger pull-left">issue</span></td>
+                                        <td style="width: 40px;"><span class="label label-danger pull-left">ISSUE</span></td>
+                                        <td style="width: 40px;"><span class="label label-warning pull-left">OPEN</span></td>
                                         <td class="mailbox-name">#98543</td>
                                         <td class="mailbox-subject">Form XXX tidak bisa di Klik</td>
                                         <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
                                         <td class="mailbox-date">15/04/2018</td>
+                                        <td>
+                                            <a href="{{ route("user.view_issue") }}" class="btn btn-default btn-sm">View</a>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><span class="label label-info pull-left">training</span></td>
+                                        <td><span class="label label-info pull-left">TRAINING</span></td>
+                                        <td><span class="label label-success pull-left">RESOLVED</span></td>
                                         <td class="mailbox-name">#98544</td>
                                         <td class="mailbox-subject">[Training Form : XXX] Review Performance</td>
                                         <td class="mailbox-attachment"></td>
                                         <td class="mailbox-date">24/04/2018</td>
+                                        <td>
+                                            <a href="{{ route("user.view_issue") }}" class="btn btn-default btn-sm">View</a>
+                                        </td>
                                     </tr>
+                                    @endfor
                                 </tbody>
                             </table>
                             <!-- /.table -->
                         </div>
                         <!-- /.mail-box-messages -->
-                    </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer no-padding">
-                        <div class="mailbox-controls">
-                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
-                            <div class="pull-right">
-                                1-50/2
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
-                                </div>
-                                <!-- /.btn-group -->
-                            </div>
-                            <!-- /.pull-right -->
-                        </div>
                     </div>
                 </div>
                 <!-- /. box -->

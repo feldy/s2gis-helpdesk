@@ -11,4 +11,14 @@ class IssueController extends Controller
         $view = view('pages.user.main_issue');
         return $view;
     }
+
+    public static function showCreateIssues() {
+        $view = view('pages.user.create_issue');
+        return $view;
+    }
+
+    public static function showViewIssues() {
+        $view = view('pages.user.view_issue');
+        return $view;
+    }
 }

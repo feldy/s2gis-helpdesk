@@ -26,4 +26,12 @@ class MenuController extends Controller
     public function showIssues() {
         return IssueController::showForm();
     }
+
+    public function showCreateIssues() {
+        return IssueController::showCreateIssues();
+    }
+
+    public function showViewIssues() {
+        return IssueController::showViewIssues();
+    }
 }

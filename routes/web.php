@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 
 Route::get('/issues', "Main\MenuController@showIssues")->name("user.main_issue");
+Route::get('/create-issue', "Main\MenuController@showCreateIssues")->name("user.create_issue");
+Route::get('/view-issue', "Main\MenuController@showViewIssues")->name("user.view_issue");
 
 Auth::routes();
 
