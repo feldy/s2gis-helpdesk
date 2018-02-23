@@ -28,7 +28,7 @@
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <!-- form start -->
-                    <form role="form">
+                    <form role="form" action="">
                         <div class="box-header with-border">
                             <h3 class="box-title">Create New Issue</h3>
                         </div>
