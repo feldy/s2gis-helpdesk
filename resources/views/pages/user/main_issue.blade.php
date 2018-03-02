@@ -14,7 +14,6 @@
     <section class="content-header">
         <h1>Issue</h1>
     </section>
-
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -90,31 +89,24 @@
                         <div class="table-responsive mailbox-messages">
                             <table class="table table-hover table-striped">
                                 <tbody>
-                                @for($i=0;$i<5;$i++)
+                                    @foreach($items as $item)
                                     <tr>
 
-                                        <td style="width: 40px;"><span class="label label-danger pull-left">ISSUE</span></td>
-                                        <td style="width: 40px;"><span class="label label-warning pull-left">OPEN</span></td>
-                                        <td class="mailbox-name">#98543</td>
-                                        <td class="mailbox-subject">Form XXX tidak bisa di Klik</td>
-                                        <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-                                        <td class="mailbox-date">15/04/2018</td>
+                                        <td style="width: 40px;">
+                                            <span class="label label-danger pull-left">{{ $item->type }}</span> <br />
+                                            <span class="label label-warning pull-left">{{ $item->status }}</span>
+                                        </td>
+                                        <td class="mailbox-name">#{{ $item->nomor_issue }}</td>
+                                        <td class="mailbox-subject">[<strong>{{ $item->form_name }}</strong>] {{ $item->subject }}</td>
+                                        <td class="mailbox-attachment">
+                                            {{--<i class="fa fa-paperclip"></i>--}}
+                                        </td>
+                                        <td class="mailbox-date">{{ date_format($item->created_at, 'd/m/Y')}}</td>
                                         <td>
-                                            <a href="{{ route("user.view_issue") }}" class="btn btn-default btn-sm">View</a>
+                                            <a href="{{ url("view-issue/?idHeader=".$item->id) }}" class="btn btn-default btn-sm">View</a>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td><span class="label label-info pull-left">TRAINING</span></td>
-                                        <td><span class="label label-success pull-left">RESOLVED</span></td>
-                                        <td class="mailbox-name">#98544</td>
-                                        <td class="mailbox-subject">[Training Form : XXX] Review Performance</td>
-                                        <td class="mailbox-attachment"></td>
-                                        <td class="mailbox-date">24/04/2018</td>
-                                        <td>
-                                            <a href="{{ route("user.view_issue") }}" class="btn btn-default btn-sm">View</a>
-                                        </td>
-                                    </tr>
-                                    @endfor
+                                    @endforeach
                                 </tbody>
                             </table>
                             <!-- /.table -->
