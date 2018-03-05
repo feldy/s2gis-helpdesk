@@ -53,6 +53,20 @@ return [
             'strict' => false,
             'engine' => null,
         ],
+        'db-sales' => [
+            'driver' => 'mysql',
+            'host' => env('DB_SALES_HOST', '127.0.0.1'),
+            'port' => env('DB_SALES_PORT', '3306'),
+            'database' => env('DB_SALES_DATABASE', 'db_sales_development'),
+            'username' => env('DB_SALES_USERNAME', 'root'),
+            'password' => env('DB_SALES_PASSWORD', 'admin'),
+            'unix_socket' => env('DB_SALES_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',

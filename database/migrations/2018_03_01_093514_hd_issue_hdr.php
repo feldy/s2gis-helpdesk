@@ -19,7 +19,7 @@ class HdIssueHdr extends Migration
             $table->string('nomor_issue', 20);
             $table->string('user_id', 36); //dari db_sales_development
             $table->string('form_id', 36); //dari db_sales_development
-            $table->string('form_name', 100); //dari db_sales_development
+//            $table->string('form_name', 100); //dari db_sales_development
             $table->string('pic_id', 36);
             $table->string('type', 15)->nullable();; //untuk flag apakah training atau issue
             $table->string('status', 15)->nullable();; //untuk status issuenya [OPEN, RESOLVED, INPROGRESS]

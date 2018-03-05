@@ -15,6 +15,7 @@
         <h1>Issue</h1>
     </section>
     <!-- Main content -->
+{{--    {{ dd(Request::) }}--}}
     <section class="content">
         <div class="row">
             <div class="col-md-3">
@@ -31,9 +32,9 @@
                     </div>
                     <div class="box-body no-padding">
                         <ul class="nav nav-pills nav-stacked">
-                            <li class="active"><a href="#"><i class="fa fa-envelope-o"></i> All</a></li>
-                            <li><a href="#"><i class="fa fa-inbox"></i> Open</a></li>
-                            <li><a href="#"><i class="fa fa-star-o"></i> Resolved</a></li>
+                            <li class="{{ Input::get('status') == '' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['type' => Input::get('type')]) }}"><i class="fa fa-envelope-o"></i> All</a></li>
+                            <li class="{{ Input::get('status') == 'OPEN' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'OPEN', 'type' => Input::get('type')]) }}"><i class="fa fa-inbox"></i> Open</a></li>
+                            <li  class="{{ Input::get('status') == 'RESOLVED' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'RESOLVED', 'type' => Input::get('type')]) }}"><i class="fa fa-star-o"></i> Resolved</a></li>
                         </ul>
                     </div>
                     <!-- /.box-body -->
@@ -50,8 +51,9 @@
                     </div>
                     <div class="box-body no-padding">
                         <ul class="nav nav-pills nav-stacked">
-                            <li><a href="#"><i class="fa fa-circle-o text-red"></i> Issue Form</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> Training</a></li>
+                            <li class="{{ Input::get('type') == '' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status')]) }}"><i class="fa fa-circle-o text-gray"></i> All</a></li>
+                            <li class="{{ Input::get('type') == 'ISSUE' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status'), 'type' => 'ISSUE']) }}"><i class="fa fa-circle-o text-red"></i> Issue Form</a></li>
+                            <li class="{{ Input::get('type') == 'TRAINING' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status'), 'type' => 'TRAINING']) }}"><i class="fa fa-circle-o text-light-blue"></i> Training</a></li>
                         </ul>
                     </div>
                     <!-- /.box-body -->
@@ -75,12 +77,12 @@
                     <div class="box-body no-padding">
                         <div class="mailbox-controls">
                             <!-- /.btn-group -->
-                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                            <a href="{{ url('issues') }}" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></a>
                             <div class="pull-right">
-                                1-50/2
+                                {{ $items->currentPage().'-'.$items->perPage().'/'.$items->total() }}
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
+                                    <a href="{{ $items->appends([])->previousPageUrl() }}" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></a>
+                                    <a href="{{ $items->appends([])->nextPageUrl() }}" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></a>
                                 </div>
                                 <!-- /.btn-group -->
                             </div>

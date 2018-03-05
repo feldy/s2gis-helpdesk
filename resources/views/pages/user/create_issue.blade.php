@@ -28,23 +28,24 @@
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <!-- form start -->
-                    <form role="form" action="">
+                    <form role="form" method="post" enctype="multipart/form-data"  action="{{ route('user.save_issue') }}">
                         <div class="box-header with-border">
                             <h3 class="box-title">Create New Issue</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
+                            {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="subject">Subject</label>
-                                <input class="form-control" id="subject" placeholder="Subject">
+                                <input class="form-control" name="subject" id="subject" value="FORM TIDAK BISA DIBUKA" placeholder="Subject">
                             </div>
                             <div class="form-group">
                                 <label for="cmb-form">Form</label>
-                                <select class="form-control cmb-form"  id="cmb-form"></select>
+                                <select name="form_id" class="form-control cmb-form"  id="cmb-form"></select>
                             </div>
                             <div class="form-group">
                                 <label for="keterangan">Keterangan</label>
-                                <textarea class="form-control" rows="8" placeholder="Isi Keterangan"></textarea>
+                                <textarea name="keterangan" class="form-control" rows="8" placeholder="Isi Keterangan">KETERANGAN FORM INI</textarea>
                             </div>
                             <div class="form-group">
                                 <div class="btn btn-default btn-file">
@@ -56,7 +57,7 @@
                         <!-- /.box-body -->
                         <div class="box-footer">
                             <div class="pull-right">
-                                <a href="{{ route("user.main_issue") }}" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
                             </div>
                         </div>
                     </form>

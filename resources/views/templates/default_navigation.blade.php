@@ -27,10 +27,10 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
                     <span class="hidden-xs">
-                        <div class="marquee" style="height: 50px; ">
-                            <p>PEMBERITAHUAN 1: Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-                            <p>PEMBERITAHUAN 2: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
-                        </div>
+                        {{--<div class="marquee" style="height: 50px; ">--}}
+                            {{--<p>PEMBERITAHUAN 1: Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>--}}
+                            {{--<p>PEMBERITAHUAN 2: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>--}}
+                        {{--</div>--}}
                     </span>
                 </li>
             </ul>
@@ -49,29 +49,20 @@
 {{--                <img src="{{ asset($pp_url) }}"  class="img-circle" alt="User Image">--}}
             </div>
             <div class="pull-left info">
-                <p>Nama Pegawai</p>
-                <small>Jabatan</small>
+                <p>{{ \Illuminate\Support\Facades\Cookie::get('user_real_name') }}</p>
+                <small>BU: {{ \Illuminate\Support\Facades\Cookie::get('bu_display') }}</small>
             </div>
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-                <li class="treeview active">
-                    <ul class="treeview-menu">
-                        <li><a href="{{ route("user.main_issue") }}"><i class="fa fa-circle-o"></i>Issue</a></li>
-                    </ul>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i>Menu 2</a></li>
-                    </ul>
-                </li>
             <li class="treeview active">
-                <a>
-                {{--<a href="{{ route('logout') }}">--}}
-                    <form action="{{ route('logout') }}" method="post">
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger"><i class="fa fa-sign-out"></i> Logout</button>
-                    </form>
-                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route("user.main_issue") }}"><i class="fa fa-circle-o"></i>Issue</a></li>
+                </ul>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i>Menu 2</a></li>
+                </ul>
             </li>
         </ul>
     </section>

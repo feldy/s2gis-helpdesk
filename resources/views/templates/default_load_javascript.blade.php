@@ -37,6 +37,13 @@
     getURLAsset = function () {
         return '{{ asset("") }}';
     }
+
+    //getAkses
+    $.get('/login?from_url=/', {})
+        .done(function() {console.log('Granted!!')})
+        .fail(function() {
+            window.location='/login?from_url=/';
+        })
 </script>
 <script src="{{ asset('app/startup/main.js') }}" type="text/javascript"></script>
 
