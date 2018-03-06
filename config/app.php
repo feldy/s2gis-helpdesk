@@ -231,6 +231,7 @@ return [
         'HTML' => Collective\Html\HtmlFacade::class,
         'UUID' => Ramsey\Uuid\Uuid::class,
         'Input' => Illuminate\Support\Facades\Input::class,
+        'SSGUtil' => \App\Http\Controllers\Util\SSGUtil::class,
     ],
 
 ];

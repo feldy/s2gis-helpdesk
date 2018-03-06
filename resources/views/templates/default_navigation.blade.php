@@ -49,8 +49,8 @@
 {{--                <img src="{{ asset($pp_url) }}"  class="img-circle" alt="User Image">--}}
             </div>
             <div class="pull-left info">
-                <p>{{ \Illuminate\Support\Facades\Cookie::get('user_real_name') }}</p>
-                <small>BU: {{ \Illuminate\Support\Facades\Cookie::get('bu_display') }}</small>
+                <p>{{ SSGUtil::info('username') }}</p>
+                <small>{{ SSGUtil::info('bu_display') }}</small>
             </div>
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -59,9 +59,6 @@
             <li class="treeview active">
                 <ul class="treeview-menu">
                     <li><a href="{{ route("user.main_issue") }}"><i class="fa fa-circle-o"></i>Issue</a></li>
-                </ul>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i>Menu 2</a></li>
                 </ul>
             </li>
         </ul>

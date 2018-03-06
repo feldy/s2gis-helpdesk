@@ -19,7 +19,9 @@
     <section class="content">
         <div class="row">
             <div class="col-md-3">
-                <a href="{{ route('user.create_issue') }}" class="btn btn-primary btn-block margin-bottom">Create New Issue</a>
+                @if(SSGUtil::info('is_employee'))
+                    <a href="{{ route('user.create_issue') }}" class="btn btn-primary btn-block margin-bottom">Create New Issue</a>
+                @endif
 
                 <div class="box box-solid">
                     <div class="box-header with-border">
@@ -62,6 +64,7 @@
             </div>
             <!-- /.col -->
             <div class="col-md-9">
+                @include("templates.default_alert_message")
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">Issue List</h3>
@@ -96,15 +99,15 @@
 
                                         <td style="width: 40px;">
                                             <span class="label label-danger pull-left">{{ $item->type }}</span> <br />
-                                            <span class="label label-warning pull-left">{{ $item->status }}</span>
+                                            <span class="label label-{{ $item->status == 'RESOLVED' ? 'primary' : 'warning' }} pull-left">{{ $item->status }}</span>
                                         </td>
                                         <td class="mailbox-name">#{{ $item->nomor_issue }}</td>
                                         <td class="mailbox-subject">[<strong>{{ $item->form_name }}</strong>] {{ $item->subject }}</td>
-                                        <td class="mailbox-attachment">
+                                        <td style="width: 10px;" class="mailbox-attachment">
                                             {{--<i class="fa fa-paperclip"></i>--}}
                                         </td>
-                                        <td class="mailbox-date">{{ date_format($item->created_at, 'd/m/Y')}}</td>
-                                        <td>
+                                        <td style="width: 20px;" class="mailbox-date">{{ date_format($item->created_at, 'd/m/Y')}}</td>
+                                        <td style="width: 20px;">
                                             <a href="{{ url("view-issue/?idHeader=".$item->id) }}" class="btn btn-default btn-sm">View</a>
                                         </td>
                                     </tr>

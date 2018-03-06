@@ -17,7 +17,8 @@ class HdIssueDtl extends Migration
             $table->string('id', 36)->primary();
             $table->string('issue_id', 36);
             $table->string('sender_id', 36); //isinya user_sid pengirim dari db_sales_development
-            $table->string('receiver_id', 36); //isinya user_sid penerima dari db_sales_development
+            $table->string('sender_name', 100);
+//            $table->string('receiver_id', 36); //isinya user_sid penerima dari db_sales_development
             $table->text('keterangan');
             $table->timestamps();
         });

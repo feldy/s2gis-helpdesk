@@ -37,7 +37,7 @@
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="subject">Subject</label>
-                                <input class="form-control" name="subject" id="subject" value="FORM TIDAK BISA DIBUKA" placeholder="Subject">
+                                <input class="form-control" name="subject" id="subject" required value="FORM TIDAK BISA DIBUKA" placeholder="Subject">
                             </div>
                             <div class="form-group">
                                 <label for="cmb-form">Form</label>
@@ -45,7 +45,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="keterangan">Keterangan</label>
-                                <textarea name="keterangan" class="form-control" rows="8" placeholder="Isi Keterangan">KETERANGAN FORM INI</textarea>
+                                <textarea name="keterangan" class="form-control" required rows="8" placeholder="Isi Keterangan">KETERANGAN FORM INI</textarea>
                             </div>
                             <div class="form-group">
                                 <div class="btn btn-default btn-file">

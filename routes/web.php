@@ -26,6 +26,7 @@ Route::group(['middleware' => ['s2gis']], function () {
 
     Route::get('/get-form-api', "User\IssueController@formAPI")->name("user.form_api");
     Route::post('/save-issue', "User\IssueController@save")->name("user.save_issue");
+    Route::post('/update-issue', "User\IssueController@updateIssue")->name("user.update_issue");
 });
 
 //Auth::routes();
