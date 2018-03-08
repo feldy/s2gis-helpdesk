@@ -7,7 +7,6 @@
  */
 ?>
 @extends('templates.default_main_page')
-
 {{--Content--}}
 @section('content')
     <!-- Content Header (Page header) -->
@@ -35,8 +34,9 @@
                     <div class="box-body no-padding">
                         <ul class="nav nav-pills nav-stacked">
                             <li class="{{ Input::get('status') == '' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['type' => Input::get('type')]) }}"><i class="fa fa-envelope-o"></i> All</a></li>
-                            <li class="{{ Input::get('status') == 'OPEN' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'OPEN', 'type' => Input::get('type')]) }}"><i class="fa fa-inbox"></i> Open</a></li>
-                            <li  class="{{ Input::get('status') == 'RESOLVED' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'RESOLVED', 'type' => Input::get('type')]) }}"><i class="fa fa-star-o"></i> Resolved</a></li>
+                            <li class="{{ Input::get('status') == 'OPEN' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'OPEN', 'type' => Input::get('type')]) }}"><i class="fa fa-folder-open text-blue"></i> Open</a></li>
+                            <li  class="{{ Input::get('status') == 'RESOLVED' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'RESOLVED', 'type' => Input::get('type')]) }}"><i class="fa fa-check text-green"></i> Resolved</a></li>
+                            <li  class="{{ Input::get('status') == 'CLOSED' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'CLOSED', 'type' => Input::get('type')]) }}"><i class="fa fa-close text-red"></i> Closed</a></li>
                         </ul>
                     </div>
                     <!-- /.box-body -->
@@ -54,8 +54,8 @@
                     <div class="box-body no-padding">
                         <ul class="nav nav-pills nav-stacked">
                             <li class="{{ Input::get('type') == '' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status')]) }}"><i class="fa fa-circle-o text-gray"></i> All</a></li>
-                            <li class="{{ Input::get('type') == 'ISSUE' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status'), 'type' => 'ISSUE']) }}"><i class="fa fa-circle-o text-red"></i> Issue Form</a></li>
-                            <li class="{{ Input::get('type') == 'TRAINING' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status'), 'type' => 'TRAINING']) }}"><i class="fa fa-circle-o text-light-blue"></i> Training</a></li>
+                            <li class="{{ Input::get('type') == 'ISSUE' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status'), 'type' => 'ISSUE']) }}"><i class="fa fa-circle-o text-primary"></i> Issue Form</a></li>
+                            <li class="{{ Input::get('type') == 'TRAINING' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status'), 'type' => 'TRAINING']) }}"><i class="fa fa-circle-o text-warning"></i> Training</a></li>
                         </ul>
                     </div>
                     <!-- /.box-body -->
@@ -94,12 +94,15 @@
                         <div class="table-responsive mailbox-messages">
                             <table class="table table-hover table-striped">
                                 <tbody>
+                                    @if(empty(count($items)))
+                                        <tr><td class="text-center" colspan="6">Tidak ada data</td></tr>
+                                    @endif
+
                                     @foreach($items as $item)
                                     <tr>
-
                                         <td style="width: 40px;">
-                                            <span class="label label-danger pull-left">{{ $item->type }}</span> <br />
-                                            <span class="label label-{{ $item->status == 'RESOLVED' ? 'primary' : 'warning' }} pull-left">{{ $item->status }}</span>
+                                            <span class="label label-{{ $item->status == 'ISSUE' ? 'warning' : 'primary' }} pull-left">{{ $item->type }}</span> <br />
+                                            <span class="label label-{{ (($item->status == 'RESOLVED') ? 'success' : (($item->status == 'CLOSED') ? 'danger' : 'info')) }} pull-left">{{ $item->status }}</span>
                                         </td>
                                         <td class="mailbox-name">#{{ $item->nomor_issue }}</td>
                                         <td class="mailbox-subject">[<strong>{{ $item->form_name }}</strong>] {{ $item->subject }}</td>

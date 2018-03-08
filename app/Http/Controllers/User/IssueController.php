@@ -157,6 +157,7 @@ class IssueController extends Controller
                         return redirect()->route('user.main_issue')->with('success','Data Berhasil di Update');
                         break;
                     case 'ratting':
+                        $obj->status = 'CLOSED';
                         $obj->ratting = $request->rdRatting;
                         $obj->save();
 

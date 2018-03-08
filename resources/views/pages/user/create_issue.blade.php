@@ -24,7 +24,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <!-- form start -->
@@ -50,8 +50,14 @@
                             <div class="form-group">
                                 <div class="btn btn-default btn-file">
                                     <i class="fa fa-paperclip"></i> Attachment
-                                    <input name="attachment" type="file">
+                                    <input multiple name="attachment" type="file" id="attachment">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <ul class="mailbox-attachments clearfix" id="file-preview">
+                                    {{--<li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span></li>--}}
+                                    {{--<li><span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span></li>--}}
+                                </ul>
                             </div>
                         </div>
                         <!-- /.box-body -->

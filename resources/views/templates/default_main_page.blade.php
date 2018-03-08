@@ -10,5 +10,6 @@
             @include("templates.default_footer")
         </div><!-- ./wrapper -->
         @include("templates.default_load_javascript")
+        @include("templates.default_modal_image_preview")
     </body>
 </html>

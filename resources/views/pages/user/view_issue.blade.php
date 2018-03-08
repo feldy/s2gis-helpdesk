@@ -79,13 +79,10 @@
                                     <button type="submit" name="btnsubmit" value="resolved" class="btn btn-default"><i class="fa fa-thumbs-up"></i> Resolved Issue</button>
                                 @endif
                             </div>
-                        @else
-                                @if(empty($item->ratting) && SSGUtil::info('is_employee'))
-                                    <button type="button" data-target="#myModal" data-toggle="modal" class="btn btn-info"><i class="fa fa-thumbs-up"></i> Close Issue</button>
-                                @elseif(!empty($item->ratting))
-                                    Ratting: <strong>{{ $item->ratting == -1 ? 'TIDAK PUAS' : $item->ratting == 0 ? 'CUKUP' : 'PUAS' }}</strong>
-                                @endif
-
+                        @elseif($item->status == 'RESOLVED' && SSGUtil::info('is_employee'))
+                            <button type="button" data-target="#myModal" data-toggle="modal" class="btn btn-info"><i class="fa fa-thumbs-up"></i> Close Issue</button>
+                        @elseif($item->status == 'CLOSED')
+                            Ratting: <strong>{{ $item->ratting == -1 ? 'TIDAK PUAS' : $item->ratting == 0 ? 'CUKUP' : 'PUAS' }}</strong>
                         @endif
                     </div>
                 </form>
