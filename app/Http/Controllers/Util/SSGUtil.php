@@ -31,4 +31,33 @@ class SSGUtil extends Controller
             return $item->$param;
         }
     }
+
+    public static function prosesUploadDokumen(Request $request, $id, $name, $path, $isMultiple = false) {
+        $file = $request->file($name);
+        if ($file) {
+//            dd($file);
+            if ($isMultiple) {
+                $idx = 1;
+                foreach ($file as $item) {
+                    $ext = '.'.$item->extension();
+
+                    //delete dahulu file sebelumnya
+//                    UtilController::prosesDeletePreviousFile($path."/".$id."_".$idx);
+
+                    $upload_path = $item->storeAs($path, $id."_".$idx.$ext);
+                    $idx++;
+                }
+            } else {
+                //generate extension
+                $ext = '.'.$file->extension();
+
+                //delete dahulu file sebelumnya
+//                UtilController::prosesDeletePreviousFile($path."/".$id);
+
+                //upload file
+                $upload_path = $file->storeAs($path, $id.$ext);
+            }
+
+        }
+    }
 }

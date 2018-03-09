@@ -33,10 +33,10 @@
                     </div>
                     <div class="box-body no-padding">
                         <ul class="nav nav-pills nav-stacked">
-                            <li class="{{ Input::get('status') == '' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['type' => Input::get('type')]) }}"><i class="fa fa-envelope-o"></i> All</a></li>
-                            <li class="{{ Input::get('status') == 'OPEN' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'OPEN', 'type' => Input::get('type')]) }}"><i class="fa fa-folder-open text-blue"></i> Open</a></li>
-                            <li  class="{{ Input::get('status') == 'RESOLVED' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'RESOLVED', 'type' => Input::get('type')]) }}"><i class="fa fa-check text-green"></i> Resolved</a></li>
-                            <li  class="{{ Input::get('status') == 'CLOSED' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'CLOSED', 'type' => Input::get('type')]) }}"><i class="fa fa-close text-red"></i> Closed</a></li>
+                            <li class="{{ Input::get('status') == '' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['type' => Input::get('type'), 'search' => Input::get('search')]) }}"><i class="fa fa-envelope-o"></i> All</a></li>
+                            <li class="{{ Input::get('status') == 'OPEN' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'OPEN', 'type' => Input::get('type'), 'search' => Input::get('search')]) }}"><i class="fa fa-folder-open text-blue"></i> Open</a></li>
+                            <li  class="{{ Input::get('status') == 'RESOLVED' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'RESOLVED', 'type' => Input::get('type'), 'search' => Input::get('search')]) }}"><i class="fa fa-check text-green"></i> Resolved</a></li>
+                            <li  class="{{ Input::get('status') == 'CLOSED' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => 'CLOSED', 'type' => Input::get('type'), 'search' => Input::get('search')]) }}"><i class="fa fa-close text-red"></i> Closed</a></li>
                         </ul>
                     </div>
                     <!-- /.box-body -->
@@ -53,9 +53,9 @@
                     </div>
                     <div class="box-body no-padding">
                         <ul class="nav nav-pills nav-stacked">
-                            <li class="{{ Input::get('type') == '' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status')]) }}"><i class="fa fa-circle-o text-gray"></i> All</a></li>
-                            <li class="{{ Input::get('type') == 'ISSUE' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status'), 'type' => 'ISSUE']) }}"><i class="fa fa-circle-o text-primary"></i> Issue Form</a></li>
-                            <li class="{{ Input::get('type') == 'TRAINING' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status'), 'type' => 'TRAINING']) }}"><i class="fa fa-circle-o text-warning"></i> Training</a></li>
+                            <li class="{{ Input::get('type') == '' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status'), 'search' => Input::get('search')]) }}"><i class="fa fa-circle-o text-gray"></i> All</a></li>
+                            <li class="{{ Input::get('type') == 'ISSUE' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status'), 'type' => 'ISSUE', 'search' => Input::get('search')]) }}"><i class="fa fa-circle-o text-primary"></i> Issue Form</a></li>
+                            <li class="{{ Input::get('type') == 'TRAINING' ? 'active' : '' }}"><a href="{{ url('issues/?') . http_build_query(['status' => Input::get('status'), 'type' => 'TRAINING', 'search' => Input::get('search')]) }}"><i class="fa fa-circle-o text-warning"></i> Training</a></li>
                         </ul>
                     </div>
                     <!-- /.box-body -->
@@ -69,10 +69,19 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">Issue List</h3>
 
+
+
                         <div class="box-tools pull-right">
-                            <div class="has-feedback">
-                                <input class="form-control input-sm" placeholder="Search Issue" type="text">
-                            </div>
+                            <form method="get" action="{{ url('issues/') }}">
+                                <div class="input-group">
+                                    <input type="hidden" name="type" value="{{ Input::get('type') ?? "" }}">
+                                    <input type="hidden" name="status" value="{{ Input::get('status') ?? "" }}">
+                                    <input type="text" value="{{ Input::get('search') ?? "" }}" name="search" placeholder="Search Issue" class="form-control">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info" type="submit">Search</button>
+                                    </span>
+                                </div>
+                            </form>
                         </div>
                         <!-- /.box-tools -->
                     </div>
@@ -107,7 +116,9 @@
                                         <td class="mailbox-name">#{{ $item->nomor_issue }}</td>
                                         <td class="mailbox-subject">[<strong>{{ $item->form_name }}</strong>] {{ $item->subject }}</td>
                                         <td style="width: 10px;" class="mailbox-attachment">
-                                            {{--<i class="fa fa-paperclip"></i>--}}
+                                            @if($item->is_uploaded)
+                                                <i class="fa fa-paperclip"></i>
+                                            @endif
                                         </td>
                                         <td style="width: 20px;" class="mailbox-date">{{ date_format($item->created_at, 'd/m/Y')}}</td>
                                         <td style="width: 20px;">

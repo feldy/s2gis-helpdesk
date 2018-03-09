@@ -43,7 +43,8 @@
             </div>
             {{--{{ dd($item->details()->get()) }}--}}
             <div class="box-body chat" id="chat-box">
-                @foreach($item->details()->orderBy('created_at')->get() as $detail)
+                @foreach($item->details as $detail)
+                    {{--{{ dd($detail->images) }}--}}
                     <!-- chat item -->
                     <div class="item">
                         <img src="{{ asset('media/images/photo-profile/photo_profile.png') }}" class="online" alt="User Image">
@@ -59,7 +60,19 @@
                             </a>
                             {{ $detail->keterangan }}
                         </p>
+
+                        @if(!empty($detail->images))
+                            <ul class="mailbox-attachments clearfix pull-right">
+                            @foreach($detail->images as $img)
+                                <li>
+                                    <span class="mailbox-attachment-icon has-img"><img class="imgUpload" onclick="showModalDialogSSG(this)" src="{{ $img }}" alt="Attachment"></span>
+                                </li>
+                            @endforeach
+                            </ul>
+                        @endif
+
                     </div>
+
                     <!-- /.item -->
                 @endforeach
             </div>
@@ -76,7 +89,7 @@
                                 @if(SSGUtil::info('is_employee'))
                                     <button type="button" data-target="#myModal" data-toggle="modal" class="btn btn-info"><i class="fa fa-thumbs-up"></i> Close Issue</button>
                                 @else
-                                    <button type="submit" name="btnsubmit" value="resolved" class="btn btn-default"><i class="fa fa-thumbs-up"></i> Resolved Issue</button>
+                                    <button type="submit" name="btnsubmit" value="resolved" class="btn btn-default"><i class="fa fa-thumbs-up"></i> Resolve Issue</button>
                                 @endif
                             </div>
                         @elseif($item->status == 'RESOLVED' && SSGUtil::info('is_employee'))

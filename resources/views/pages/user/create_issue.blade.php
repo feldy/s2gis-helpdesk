@@ -39,25 +39,25 @@
                                 <label for="subject">Subject</label>
                                 <input class="form-control" name="subject" id="subject" required value="FORM TIDAK BISA DIBUKA" placeholder="Subject">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group{{ $errors->has('form_id') ? ' has-error' : '' }}">
                                 <label for="cmb-form">Form</label>
                                 <select name="form_id" class="form-control cmb-form"  id="cmb-form"></select>
+                                @if ($errors->has('form_id'))
+                                    <span class="help-block"><strong>Isian form tidak boleh kosong.</strong></span>
+                                @endif
                             </div>
                             <div class="form-group">
                                 <label for="keterangan">Keterangan</label>
                                 <textarea name="keterangan" class="form-control" required rows="8" placeholder="Isi Keterangan">KETERANGAN FORM INI</textarea>
                             </div>
                             <div class="form-group">
-                                <div class="btn btn-default btn-file">
+                                <div class="btn btn-default btn-file btn-attachment">
                                     <i class="fa fa-paperclip"></i> Attachment
-                                    <input multiple name="attachment" type="file" id="attachment">
+                                    <input multiple name="attachment[]" type="file" id="attachment" accept="image/*">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <ul class="mailbox-attachments clearfix" id="file-preview">
-                                    {{--<li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span></li>--}}
-                                    {{--<li><span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span></li>--}}
-                                </ul>
+                                <ul class="mailbox-attachments clearfix" id="file-preview"></ul>
                             </div>
                         </div>
                         <!-- /.box-body -->

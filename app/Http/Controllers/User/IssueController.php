@@ -38,16 +38,21 @@ class IssueController extends Controller
         $type = Input::get('type');
         if (!empty($type)) {$data->where('type', $type);}
 
-//        $search = Input::get('search');
-//        if (!empty($type)) {
-//            $data->where('type', $type);
-//        }
+        $search = Input::get('search');
+        if (!empty($search)) {
+            $data->where(function ($query) {
+                $search  = Input::get('search');
+                $query->where('nomor_issue',"like", "%". $search ."%")
+                    ->orWhere('subject',"like", "%". $search ."%")
+                    ->orWhere('form_name',"like", "%". $search ."%");
+            });
+        }
 
 
         $data = $data->paginate(10); //pake pagging
-        foreach ($data as $item) {
-            $item->form_name = IssueController::getFormName($item->form_id);
-        }
+//        foreach ($data as $item) { //sudah ditaro di table
+//            $item->form_name = IssueController::getFormName($item->form_id);
+//        }
         $view->with('items', $data);
         return $view;
     }
@@ -67,6 +72,12 @@ class IssueController extends Controller
         }
 
         $item->form_name = IssueController::getFormName($item->form_id);
+        $item->details = $item->details()->orderBy('created_at')->get();
+        foreach ($item->details as $dtl) {
+            //get informasi file upload kalau ada
+            $dtl->images = glob('storage/uploads/'.$dtl->id.'_*');
+        }
+
         $view->with('item', $item);
         return $view;
 
@@ -91,6 +102,13 @@ class IssueController extends Controller
     }
 
     public function save(Request $request) {
+
+        $this->validate($request, [
+            'form_id' => 'required'
+        ]);
+//        dd(glob(storage_path('app/uploads/*')));
+//        dd($request);
+
         return DB::transaction(function($mysql) use ($request) {
             $obj = new IssueHdrModel();
             if ($request->id) {
@@ -110,10 +128,15 @@ class IssueController extends Controller
             $obj->subject       = $request->subject;
             $obj->user_id       = Cookie::get('username_sid');
             $obj->form_id       = $form->sid;
+            $obj->form_name     = $form->name;
             $obj->pic_id        = $pic->id;
             $obj->nomor_issue   = $lastNumber;
             $obj->type          = 'ISSUE';
             $obj->status        = 'OPEN';
+            //cek apakah ada uploadan atau tidak
+            if (!empty($request->file('attachment'))) {
+                $obj->is_uploaded = true;
+            }
 
 //            dd($obj);
             $obj->save();
@@ -136,6 +159,9 @@ class IssueController extends Controller
 //        $dtl->receiver_id = $receiverID;
         $dtl->keterangan = $request->keterangan;
 //        dd($dtl);
+
+        //upload doc
+        SSGUtil::prosesUploadDokumen($request, $dtl->id, 'attachment', '/public/uploads/', true);
         $dtl->save();
     }
 

@@ -12,9 +12,21 @@ formatDateServer = function (date) {
     return null;
 }
 
-showModalDialogSSG = function () {
-    
-}
+showModalDialogSSG = function (obj) {
+    var src = $(obj).attr('src');
+    // console.log('>> showModalDialogSSG', obj);
+
+    $("#img_items_previews").empty();
+    $('#img_items_previews').css('display', 'none');
+    $('#imagepreview').css('display', 'none');
+
+    if (src != null) {
+        $('#img_items_previews').css('display', 'inline-block');
+        $('#imagepreview').attr('src', src);
+        $('#imagepreview').css('display', 'inline-block');
+        $('#imagemodal').modal('show');
+    }
+};
 
 // Jquery ready
 $(function () {
@@ -31,10 +43,9 @@ $(function () {
 
 
     $('.btn-preview-image').on('click', function() {
-        console.log('>>>>>>>>>>...');
-        // console.log('>>', $(this).attr('src'));
+        console.log('>> preview-image', $(this).attr('src'));
         var src = $(this).attr('src'); //string
-
+        return;
         //cek apakah berbentuk array atau tidak
         var obj = src;
         try {
