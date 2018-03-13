@@ -27,6 +27,33 @@ class HdIssueHdr extends Migration
             $table->boolean('is_uploaded', 15)->default(false);
             $table->timestamps();
         });
+
+        $statmentUpdate = "            
+            CREATE EVENT scheduler_issue ON SCHEDULE EVERY 1 HOUR DO 
+            BEGIN
+                INSERT INTO hd_issue_dtl (id, issue_id, sender_id, sender_name, keterangan, created_at, updated_at)
+                    select uuid(), hdr.id, hdr.user_id, 'SYSTEM', 'Issue Telah di Closed Otomatis oleh System, mendapatkan Ratting: <strong>PUAS</strong>', now(), now() 
+                    from    hd_issue_hdr hdr 
+                    where   hdr.status = 'RESOLVED'
+                    AND     hdr.type = 'ISSUE'
+                    AND     hdr.ratting is null
+                    AND     TIMESTAMPDIFF(DAY, hdr.updated_at, now()) > 2
+                    ;
+                    
+                UPDATE hd_issue_hdr hdr SET hdr.ratting = 1, hdr.status = 'CLOSED'
+                WHERE   hdr.status = 'RESOLVED'
+                AND     hdr.type = 'ISSUE'
+                AND     hdr.ratting is null
+                AND     TIMESTAMPDIFF(DAY, hdr.updated_at, now()) > 2
+                ;
+                        
+            END            
+        ";
+
+        //AND     TIMESTAMPDIFF(DAY, hdr.updated_at, now()) > 2
+
+        DB::unprepared('SET GLOBAL event_scheduler = 1;');
+        DB::unprepared($statmentUpdate);
     }
 
     /**
@@ -36,6 +63,7 @@ class HdIssueHdr extends Migration
      */
     public function down()
     {
+        DB::unprepared('DROP EVENT scheduler_issue');
         Schema::dropIfExists('hd_issue_hdr');
     }
 }

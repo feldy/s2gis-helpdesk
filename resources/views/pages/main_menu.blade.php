@@ -26,7 +26,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                            <h3>150</h3>
+                            <h3>{{ $count_issue }}</h3>
                             <p>Issue</p>
                         </div>
                         <div class="icon"><i class="fa fa-question"></i></div>
@@ -38,7 +38,7 @@
                     <!-- small box -->
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3>53</h3>
+                            <h3>{{ $count_resolved }}</h3>
                             <p>Resolved</p>
                         </div>
                         <div class="icon"><i class="fa fa-check-square-o"></i></div>
@@ -50,7 +50,7 @@
                     <!-- small box -->
                     <div class="small-box bg-yellow">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3>{{ $count_puas }}</h3>
                             <p>Puas</p>
                         </div>
                         <div class="icon"><i class="fa fa-thumbs-o-up"></i></div>
@@ -62,7 +62,7 @@
                     <!-- small box -->
                     <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>5</h3>
+                            <h3>{{ $count_tidak_puas }}</h3>
                             <p>Tidak Puas</p>
                         </div>
                         <div class="icon"><i class="fa fa-thumbs-o-down"></i></div>

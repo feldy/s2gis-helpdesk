@@ -17,6 +17,18 @@ use Ramsey\Uuid\Uuid;
 
 class IssueController extends Controller
 {
+    public static function showMainForm() {
+        $view = view('pages.main_menu');
+        if(!SSGUtil::info('is_employee')) {
+            $view->with('count_issue', DB::table('hd_issue_hdr')->where('pic_id', SSGUtil::info('pic_id'))->count());
+            $view->with('count_resolved', DB::table('hd_issue_hdr')->where('pic_id', SSGUtil::info('pic_id'))->where('status', 'RESOLVED')->groupBy('status')->count());
+            $view->with('count_puas', DB::table('hd_issue_hdr')->where('pic_id', SSGUtil::info('pic_id'))->where('ratting', 1)->groupBy('ratting')->count());
+            $view->with('count_tidak_puas', DB::table('hd_issue_hdr')->where('pic_id', SSGUtil::info('pic_id'))->where('ratting', -1)->groupBy('ratting')->count());
+        }
+
+        return $view;
+    }
+
     public static function getFormName($formID) {
         return SCMasFormModel::find($formID)->name;
     }
@@ -74,11 +86,19 @@ class IssueController extends Controller
         $item->form_name = IssueController::getFormName($item->form_id);
         $item->details = $item->details()->orderBy('created_at')->get();
         foreach ($item->details as $dtl) {
+            //proses update
+            if (SSGUtil::info('username_id') != $dtl->sender_id) {
+                $dtl->is_read = true;
+                $dtl->save();
+            }
+
             //get informasi file upload kalau ada
             $dtl->images = glob('storage/uploads/'.$dtl->id.'_*');
         }
 
         $view->with('item', $item);
+
+
         return $view;
 
     }
@@ -118,7 +138,8 @@ class IssueController extends Controller
             }
             $form = SCMasFormModel::find($request->form_id); //get formID
             $pic = PICModel::where('initial_name', $form->pic)->first();
-            $dataLastNumber = DB::table('hd_issue_hdr')->orderBy('nomor_issue', 'desc')->take(1)->first();
+            $dataLastNumber = DB::table('hd_issue_hdr')->orderByRaw('CONVERT(nomor_issue, UNSIGNED) desc')->take(1)->first();
+//            dd($dataLastNumber);
             if (empty($dataLastNumber)) {
                 $lastNumber = 1;
             } else {
@@ -183,6 +204,19 @@ class IssueController extends Controller
                         return redirect()->route('user.main_issue')->with('success','Data Berhasil di Update');
                         break;
                     case 'ratting':
+                        if ($obj->status == 'CLOSED') {
+                            return redirect()->route('user.main_issue')->with('error','Maaf ! Data tidak bisa diproses karna sudah terjadi perubahan status.');
+                        }
+
+                        if ($request->rdRatting < 0) { //TIDAK PUAS
+                            $request->keterangan = 'Issue Telah di Closed, mendapatkan Ratting: <strong>TIDAK PUAS</strong>. <br />Keterangan: '.$request->keterangan;
+                        } else if ($request->rdRatting > 0) { //PUAS
+                            $request->keterangan = 'Issue Telah di Closed, mendapatkan Ratting: <strong>PUAS</strong>.';
+                        } else { //CUKUP
+                            $request->keterangan = 'Issue Telah di Closed, mendapatkan Ratting: <strong>CUKUP</strong>.';
+                        }
+
+                        $this->saveDetail($request, $obj, SSGUtil::info('username_id'));
                         $obj->status = 'CLOSED';
                         $obj->ratting = $request->rdRatting;
                         $obj->save();

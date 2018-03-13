@@ -34,4 +34,8 @@ class MenuController extends Controller
     public function showViewIssues() {
         return IssueController::showViewIssues();
     }
+
+    public function showMain() {
+        return IssueController::showMainForm();
+    }
 }

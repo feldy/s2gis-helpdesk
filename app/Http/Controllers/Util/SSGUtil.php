@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Util;
 
+use App\Model\IssueDtlModel;
 use App\Model\PICModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 
 class SSGUtil extends Controller
 {
@@ -59,5 +61,35 @@ class SSGUtil extends Controller
             }
 
         }
+    }
+
+    public static function getNotification() {
+        $info = SSGUtil::info();
+
+        $data = DB::table('hd_issue_dtl')
+            ->join('hd_issue_hdr', 'hd_issue_hdr.id', '=', 'hd_issue_dtl.issue_id')
+            ->select(
+                DB::raw('count(hd_issue_dtl.id) as jumlah_notif'),
+                'hd_issue_dtl.sender_name',
+                'hd_issue_dtl.created_at',
+                'hd_issue_hdr.form_name',
+                'hd_issue_dtl.keterangan',
+                DB::raw('hd_issue_hdr.status as status_issue'),
+                DB::raw('hd_issue_hdr.id as id_hdr'),
+                DB::raw('(select dtl.keterangan as keterangan_final from hd_issue_dtl dtl where dtl.issue_id = hd_issue_hdr.id order by dtl.created_at desc LIMIT 1) as keterangan_final')
+            )
+            ->where('is_read', false)
+            ->where('sender_id', '<>', $info->username_id)
+            ->orderBy('hd_issue_hdr.updated_at', 'desc')
+            ->groupBy('hd_issue_dtl.issue_id')
+        ;
+
+        if ($info->is_employee) {
+            $data->where('hd_issue_hdr.user_id', $info->username_id);
+        } else {
+            $data->join('hd_pic', 'hd_pic.id', '=', 'hd_issue_hdr.pic_id');
+            $data->where('hd_pic.user_id', $info->username_id);
+        }
+        return $data->get();
     }
 }

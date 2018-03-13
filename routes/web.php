@@ -12,13 +12,8 @@
 */
 
 Route::group(['middleware' => ['s2gis']], function () {
-    Route::get('/', function () {
-        return view('pages.main_menu');
-    });
-
-    Route::get('/home', function () {
-        return view('pages.main_menu');
-    });
+    Route::get('/', "Main\MenuController@showMain")->name("user.main");
+    Route::get('/home', "Main\MenuController@showMain");
 
     Route::get('/issues', "Main\MenuController@showIssues")->name("user.main_issue");
     Route::get('/create-issue', "Main\MenuController@showCreateIssues")->name("user.create_issue");

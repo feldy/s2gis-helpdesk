@@ -18,6 +18,7 @@ class HdIssueDtl extends Migration
             $table->string('issue_id', 36);
             $table->string('sender_id', 36); //isinya user_sid pengirim dari db_sales_development
             $table->string('sender_name', 100);
+            $table->boolean('is_read')->default(false);
 //            $table->string('receiver_id', 36); //isinya user_sid penerima dari db_sales_development
             $table->text('keterangan');
             $table->timestamps();

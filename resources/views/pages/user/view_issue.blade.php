@@ -58,7 +58,7 @@
                                     {{ $detail->sender_name }}
                                 @endif
                             </a>
-                            {{ $detail->keterangan }}
+                            {!! $detail->keterangan !!}
                         </p>
 
                         @if(!empty($detail->images))
@@ -95,7 +95,7 @@
                         @elseif($item->status == 'RESOLVED' && SSGUtil::info('is_employee'))
                             <button type="button" data-target="#myModal" data-toggle="modal" class="btn btn-info"><i class="fa fa-thumbs-up"></i> Close Issue</button>
                         @elseif($item->status == 'CLOSED')
-                            Ratting: <strong>{{ $item->ratting == -1 ? 'TIDAK PUAS' : $item->ratting == 0 ? 'CUKUP' : 'PUAS' }}</strong>
+                            Ratting: <strong>{{ ($item->ratting < 0 ? 'TIDAK PUAS' : ($item->ratting > 0 ? 'PUAS' : 'CUKUP')) }}</strong>
                         @endif
                     </div>
                 </form>
@@ -120,16 +120,20 @@
                         <div class="form-group text-center">
                             <div data-toggle="buttons">
                                 <label class="btn btn-default btn-circle btn-lg">
-                                    <input onchange="onClickRatting(this.value)" type="radio" name="rdRatting" value="-1"><i class="fa fa-thumbs-o-down"></i>
+                                    <input onchange="onClickRatting(this.value)" type="radio" name="rdRatting" value=-1><i class="fa fa-thumbs-o-down"></i>
                                 </label>
                                 <label class="btn btn-default btn-circle btn-lg active">
-                                    <input onchange="onClickRatting(this.value)" type="radio" name="rdRatting" value="0"><i class="fa fa-meh-o" checked></i>
+                                    <input onchange="onClickRatting(this.value)" type="radio" name="rdRatting" value=0><i class="fa fa-meh-o" checked></i>
                                 </label>
                                 <label class="btn btn-default btn-circle btn-lg">
-                                    <input onchange="onClickRatting(this.value)" type="radio" name="rdRatting" value="1"><i class="fa fa-thumbs-o-up"></i>
+                                    <input onchange="onClickRatting(this.value)" type="radio" name="rdRatting" value=1><i class="fa fa-thumbs-o-up"></i>
                                 </label>
                             </div>
                             <h1><label id="lblRattingCaption">CUKUP</label></h1>
+                        </div>
+                        <div class="form-group" id="lblKeterangan" style="display: none;">
+                            <label for="keterangan">Keterangan</label>
+                            <textarea id="txtKeterangan" name="keterangan" disabled class="form-control" required rows="8" placeholder="Silahkan masukan alasan Anda..."></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -143,15 +147,31 @@
 @endsection
 @section('js')
     <script type="application/javascript">
+        function showKeteranganRatting(val) {
+            $('#txtKeterangan').val('');
+            $('#txtKeterangan').attr('disabled', true);
+            if (val) { //show
+                $('#lblKeterangan').css('display', 'inline');
+                $('#txtKeterangan').attr('disabled', false);
+            } else {
+                $('#lblKeterangan').css('display', 'none');
+            }
+        }
         function onClickRatting(value) {
             console.log("value", value);
             var label = "CUKUP";
+            showKeteranganRatting(false);
             switch(parseInt(value)) {
-                case -1: label = "TIDAK PUAS"; break;
+                case -1:
+                    showKeteranganRatting(true);
+                    label = "TIDAK PUAS";
+                    break;
                 case 0: label = "CUKUP";break;
                 case 1: label = "PUAS";break;
             }
             $('#lblRattingCaption').html(label);
+
+
         }
     </script>
 @endsection
